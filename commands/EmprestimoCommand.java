@@ -6,6 +6,7 @@ import model.livros.Livro;
 import model.transacoes.Emprestimo;
 import model.transacoes.Reserva;
 import repository.Repositorio;
+import utils.Busca;
 
 import java.time.LocalDate;
 
@@ -24,30 +25,14 @@ public class EmprestimoCommand implements Comando {
         int codUsuario = Integer.parseInt(args[1]);
         int codLivro = Integer.parseInt(args[2]);
 
-        //Acessa o repositório
-        Repositorio repo = Repositorio.getInstance();
 
         //Busca Usuário e livro informada, se não forem encontrados imprime "Usuário/Livro não encontrado"
         //__________________________________________________________________________
-        Usuario usuario = repo.getUsuarios().stream()
-                .filter(u -> u.getCodigo() == codUsuario)
-                .findFirst()
-                .orElse(null);
+        Usuario usuario = Busca.buscarUsuario(codUsuario);
+        if (usuario == null) {return; }
 
-        if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
-            return;
-        }
-
-        Livro livro = repo.getLivros().stream()
-                .filter(l -> l.getCodigo() == codLivro)
-                .findFirst()
-                .orElse(null);
-
-        if (livro == null) {
-            System.out.println("Livro não encontrado.");
-            return;
-        }
+        Livro livro = Busca.buscarLivro(codLivro);
+        if (livro == null) {return;}
         //__________________________________________________________________________
 
         // Verifica regra de empréstimo
@@ -70,7 +55,7 @@ public class EmprestimoCommand implements Comando {
 
         // Remover reserva do usuário, se existir
         livro.getReservas().removeIf(reserva -> reserva.getUsuario().equals(usuario));
-        usuario.getReservas().removeIf(reserva -> reserva.getLivro().equals(livro)); //?? se houver isso em Usuario
+        usuario.getReservas().removeIf(reserva -> reserva.getLivro().equals(livro));
 
         // Marcar exemplar como emprestado
         exemplarDisponivel.setDisponivel(false);
@@ -80,7 +65,7 @@ public class EmprestimoCommand implements Comando {
         LocalDate hoje = LocalDate.now();
         LocalDate devolucao = hoje.plusDays(diasEmprestimo);
 
-        // Criar e associar empréstimo
+        // Cria e associa o empréstimo
         Emprestimo emprestimo = new Emprestimo(hoje, devolucao);
         emprestimo.setUsuario(usuario);
         emprestimo.setExemplar(exemplarDisponivel);

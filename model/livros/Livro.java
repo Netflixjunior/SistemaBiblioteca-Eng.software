@@ -2,6 +2,7 @@ package model.livros;
 
 import model.Usuario;
 import model.transacoes.Reserva;
+import observer.Observador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Livro {
 
     private List<Exemplar> exemplares = new ArrayList<>();
     private List<Reserva> reservas = new ArrayList<>();
+    private List<Observador> observadores = new ArrayList<>();
 
     public Livro(int codigo, String titulo, String editora, String autores, String edicao, int ano) {
         this.codigo = codigo;
@@ -58,10 +60,23 @@ public class Livro {
 
     public void adicionarReserva(Reserva reserva) {
         reservas.add(reserva);
+        notificarObservadores();
     }
 
     public void removerReservaDoUsuario(Usuario usuario) {
         reservas.removeIf(reserva -> reserva.getUsuario().equals(usuario));
+    }
+
+    public void adicionarObservador(Observador o){
+        observadores.add(o);
+    }
+
+    public void notificarObservadores(){
+        if (reservas.size() > 2){
+            for(Observador obs : observadores){
+                obs.notificar();
+            }
+        }
     }
 
 }

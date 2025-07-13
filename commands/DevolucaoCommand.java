@@ -5,6 +5,7 @@ import model.livros.Exemplar;
 import model.livros.Livro;
 import model.transacoes.Emprestimo;
 import repository.Repositorio;
+import utils.Busca;
 
 public class DevolucaoCommand implements Comando {
     @Override
@@ -17,26 +18,11 @@ public class DevolucaoCommand implements Comando {
         int codUsuario = Integer.parseInt(args[1]);
         int codLivro = Integer.parseInt(args[2]);
 
-        Repositorio repo = Repositorio.getInstance();
-        Usuario usuario = repo.getUsuarios().stream()
-                .filter(u -> u.getCodigo() == codUsuario)
-                .findFirst()
-                .orElse(null);
+        Usuario usuario = Busca.buscarUsuario(codUsuario);
+        if (usuario == null) {return; }
 
-        if (usuario == null) {
-            System.out.println("Usuário não encontrado.");
-            return;
-        }
-
-        Livro livro = repo.getLivros().stream()
-                .filter(l -> l.getCodigo() == codLivro)
-                .findFirst()
-                .orElse(null);
-
-        if (livro == null) {
-            System.out.println("Livro não encontrado.");
-            return;
-        }
+        Livro livro = Busca.buscarLivro(codLivro);
+        if (livro == null) {return;}
 
         // Percorre todos os empréstimos do usuário.
         // Acha o primeiro que ainda está em aberto e cujo exemplar seja de um livro igual ao que o usuário está tentando devolver.
