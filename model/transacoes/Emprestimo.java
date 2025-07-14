@@ -8,16 +8,18 @@ import model.livros.Exemplar;
 
 public class Emprestimo {
     private LocalDate dataEmprestimo;
-    private LocalDate dataDevolucao;
+    private LocalDate dataPrevistaDevolucao;
+    private LocalDate dataRealDevolucao;
+
     private boolean finalizado = false;
 
     //Para ligar o empréstimo a quem pegou o livro e a qual exemplar foi emprestado.
     private Usuario usuario;
     private Exemplar exemplar;
 
-    public Emprestimo(LocalDate dataEmprestimo, LocalDate dataDevolucao) {
+    public Emprestimo(LocalDate dataEmprestimo, LocalDate dataPrevistaDevolucao) {
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
+        this.dataPrevistaDevolucao = dataPrevistaDevolucao;
     }
     //Associa esse empréstimo a um usuário
     public void setUsuario(Usuario usuario) {
@@ -40,15 +42,21 @@ public class Emprestimo {
         return dataEmprestimo;
     }
 
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+    public LocalDate getDataPrevistaDevolucao() {
+        return dataPrevistaDevolucao;
+    }
+
+    public LocalDate getDataRealDevolucao(){
+        return dataRealDevolucao;
     }
 
     public boolean isFinalizado() {
         return finalizado;
+
     }
 
     public void finalizar() {
         this.finalizado = true;
+        this.dataRealDevolucao = LocalDate.now();
     }
 }

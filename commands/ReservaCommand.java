@@ -38,7 +38,7 @@ public class ReservaCommand implements Comando {
         // Cria e registra a reserva no usuário e no livro
         Reserva novaReserva = new Reserva(LocalDate.now(), usuario, livro);
         usuario.getReservas().add(novaReserva);
-        livro.getReservas().add(novaReserva);
+        livro.adicionarReserva(novaReserva);
 
         System.out.println("Reserva registrada com sucesso.");
     }

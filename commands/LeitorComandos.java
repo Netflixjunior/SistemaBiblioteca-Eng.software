@@ -10,10 +10,10 @@ public class LeitorComandos {
         comandos.put("emp", new EmprestimoCommand());
         comandos.put("dev", new DevolucaoCommand());
         comandos.put("res", new ReservaCommand());
-        // comandos.put("obs", new ObservacaoCommand());
-        // comandos.put("liv", new ConsultaLivroCommand());
-        // comandos.put("usu", new ConsultaUsuarioCommand());
-        // comandos.put("ntf", new ConsultaNotificacoesCommand());
+        comandos.put("obs", new ObservacaoCommand());
+        comandos.put("liv", new ConsultaLivroCommand());
+        comandos.put("usu", new ConsultaUsuarioCommand());
+        comandos.put("ntf", new ConsultaNotificacoesCommand());
     }
 
     public void processarLinha(String linha) {

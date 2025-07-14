@@ -13,4 +13,10 @@ public class AlunoGraduacao extends Usuario {
     public int getPrazoDevolucao() {
         return 4;
     }
+
+    @Override
+    public int getLimiteEmprestimos() {
+        return 2;
+    }
+
 }

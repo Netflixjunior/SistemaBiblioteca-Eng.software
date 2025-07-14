@@ -42,6 +42,10 @@ public abstract class Usuario {
 
     public abstract int getPrazoDevolucao();
 
+    public int getLimiteEmprestimos() {
+        return 0;
+    }
+
 }
 
 
