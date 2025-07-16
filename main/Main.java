@@ -47,7 +47,7 @@ public class Main {
         repo.getLivros().add(l7);
         repo.getLivros().add(l8);
 
-        // Criando exemplares para os livros (cada um com código único por livro)
+        // Criando exemplares dos livros
         l1.adicionarExemplar(new Exemplar(1, l1 ));  // Exemplar 01 do livro 100
         l1.adicionarExemplar(new Exemplar(2, l1));  // Exemplar 02 do livro 100
 

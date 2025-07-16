@@ -1,10 +1,8 @@
 package commands;
 
 import model.Usuario;
-import model.livros.Exemplar;
 import model.livros.Livro;
 import model.transacoes.Emprestimo;
-import repository.Repositorio;
 import utils.Busca;
 
 public class DevolucaoCommand implements Comando {
@@ -33,11 +31,11 @@ public class DevolucaoCommand implements Comando {
                 .orElse(null);
 
         if (emprestimo == null) {
-            System.out.println("Nenhum empréstimo ativo encontrado para este livro.");
+            System.out.println("Nenhum empréstimo encontrado para o livro.");
             return;
         }
 
-        // Marcar devolução
+        // finaliza o emprestimo
         emprestimo.finalizar();
         emprestimo.getExemplar().setDisponivel(true);
 

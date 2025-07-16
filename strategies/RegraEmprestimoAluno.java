@@ -3,8 +3,6 @@ package strategies;
 import model.Usuario;
 import model.livros.Exemplar;
 import model.livros.Livro;
-import model.transacoes.Emprestimo;
-import model.transacoes.Reserva;
 
 import java.time.LocalDate;
 
@@ -12,14 +10,14 @@ public class RegraEmprestimoAluno implements RegraEmprestimo {
 
     @Override
     public boolean podeEmprestar(Usuario usuario, Livro livro) {
-        // 1. Verifica se há exemplar disponível
+        // Regra 1
         boolean temDisponivel = livro.getExemplares().stream()
                 .anyMatch(Exemplar::isDisponivel);
         if (!temDisponivel) {
             return false;
         }
 
-        // 2. Verifica se o usuário tem empréstimos em atraso
+        // Regra 2
         boolean temAtraso = usuario.getEmprestimos().stream()
                 .anyMatch(e -> !e.isFinalizado() &&
                         e.getDataPrevistaDevolucao().isBefore(LocalDate.now()));
@@ -27,7 +25,7 @@ public class RegraEmprestimoAluno implements RegraEmprestimo {
             return false;
         }
 
-        // 3. Verifica limite de empréstimos
+        // Regra 3
         int limite = usuario.getLimiteEmprestimos();
         long ativos = usuario.getEmprestimos().stream()
                 .filter(e -> !e.isFinalizado())
@@ -36,7 +34,7 @@ public class RegraEmprestimoAluno implements RegraEmprestimo {
             return false;
         }
 
-        // 4 e 5. Reservas em relação aos exemplares disponíveis
+        // Regras 4 e 5
         long reservas = livro.getReservas().size();
         long disponiveis = livro.getExemplares().stream()
                 .filter(Exemplar::isDisponivel)
@@ -49,7 +47,7 @@ public class RegraEmprestimoAluno implements RegraEmprestimo {
             return false;
         }
 
-        // 6. Já possui empréstimo do mesmo livro
+        // Regra 6
         boolean jaTemLivro = usuario.getEmprestimos().stream()
                 .filter(e -> !e.isFinalizado())
                 .anyMatch(e -> e.getExemplar().getLivro().equals(livro));

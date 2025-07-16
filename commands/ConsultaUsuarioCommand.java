@@ -25,7 +25,7 @@ public class ConsultaUsuarioCommand implements Comando {
 
         System.out.println("Usuário: " + usuario.getNome());
 
-        //Empréstimos
+        //emprestimos
         System.out.println("Empréstimos:");
         if (usuario.getEmprestimos().isEmpty()) {
             System.out.println("Nenhum empréstimo registrado.");
@@ -44,7 +44,7 @@ public class ConsultaUsuarioCommand implements Comando {
             }
         }
 
-        // 🔒 Reservas
+        // reservas
         System.out.println("Reservas:");
         if (usuario.getReservas().isEmpty()) {
             System.out.println("Nenhuma reserva registrada.");

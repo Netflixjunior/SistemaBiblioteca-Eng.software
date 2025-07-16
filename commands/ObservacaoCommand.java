@@ -2,7 +2,6 @@ package commands;
 
 import model.Usuario;
 import model.livros.Livro;
-import repository.Repositorio;
 import observer.Observador;
 import utils.Busca;
 

@@ -26,7 +26,7 @@ public class ReservaCommand implements Comando {
         if (livro == null) {return; }
 
 
-        // Verifica se o usuário já fez uma reserva para esse livro
+        // verifica se o usuário já fez uma reserva para esse livro
         boolean jaReservou = usuario.getReservas().stream()
                 .anyMatch(r -> r.getLivro().equals(livro));
 
@@ -35,7 +35,7 @@ public class ReservaCommand implements Comando {
             return;
         }
 
-        // Cria e registra a reserva no usuário e no livro
+        // cria e registra a reserva no usuário e no livro
         Reserva novaReserva = new Reserva(LocalDate.now(), usuario, livro);
         usuario.getReservas().add(novaReserva);
         livro.adicionarReserva(novaReserva);

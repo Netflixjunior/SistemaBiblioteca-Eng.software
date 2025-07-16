@@ -22,10 +22,10 @@ public class ConsultaLivroCommand implements Comando {
         Livro livro = Busca.buscarLivro(codLivro);
         if (livro == null) return;
 
-        // Exibe título
+        // exibe título
         System.out.println("Título: " + livro.getTitulo());
 
-        // Exibe reservas
+        // exibe reservas
         int totalReservas = livro.getReservas().size();
         System.out.println("Reservas: " + totalReservas);
 
@@ -35,7 +35,7 @@ public class ConsultaLivroCommand implements Comando {
             }
         }
 
-        // Exibe cada exemplar
+        // exibe cada exemplar
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         for (Exemplar ex : livro.getExemplares()) {
@@ -44,20 +44,17 @@ public class ConsultaLivroCommand implements Comando {
             if (ex.isDisponivel()) {
                 System.out.println("Disponível");
             } else {
-                // Procura empréstimo do exemplar
+                // procura empréstimo do exemplar
                 Emprestimo emp = Repositorio.getInstance().getUsuarios().stream()
                         .flatMap(u -> u.getEmprestimos().stream())
                         .filter(e -> !e.isFinalizado() && e.getExemplar().equals(ex))
                         .findFirst()
                         .orElse(null);
 
-                if (emp != null) {
                     System.out.println("Emprestado para " + emp.getUsuario().getNome() +
                             " | Empréstimo: " + emp.getDataEmprestimo().format(fmt) +
                             " | Devolução prevista: " + emp.getDataPrevistaDevolucao().format(fmt));
-                } else {
-                    System.out.println("?");
-                }
+
             }
         }
     }

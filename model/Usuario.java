@@ -1,6 +1,5 @@
 package model;
 
-import model.livros.Livro;
 import model.transacoes.Emprestimo;
 import model.transacoes.Reserva;
 import strategies.RegraEmprestimo;
